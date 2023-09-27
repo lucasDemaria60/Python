@@ -10,9 +10,66 @@ conexion = mysql.connector.connect(host="localhost", user="root", password="", d
 def cargar_datos():
     tree.delete(*tree.get_children())  # Borrar datos existentes en el Treeview
     cursor = conexion.cursor()
-    cursor.execute("select alumnos.nombre, alumnos.apellido, alumnos.dni, Carrera.nombre, estado_alumno.nombre from alumnos join carrera on alumnos.codcarrera = carrera.codcarrera join estado_alumno on estado_alumno.cod_estado_alumno = alumnos.cod_estado_alumno")
+    cursor.execute("select alumnos.nombre, alumnos.apellido, alumnos.dni, Carrera.nombre, estado_alumno.nombre from alumnos join carrera on alumnos.codcarrera = carrera.codcarrera join estado_alumno on estado_alumno.cod_estado_alumno = alumnos.cod_estado_alumno where alumnos.cod_estado_alumno !=2")
     for row in cursor.fetchall():
         tree.insert("", "end", values=row)
+
+
+# Modificar datos
+def modificar_datos():
+    dicc = tree.item(tree.selection())
+    cambiar = dicc ['values'][2]
+    nombre = nombre_entry.get()
+    apellido = apellido_entry.get()
+    dni = dni_entry.get()
+    nombre_carrera = carrera_combobox.get()
+    estado_alumno = 1# Valor predeterminado para IDESTADOALUMNO
+    
+    if nombre and apellido and dni and nombre_carrera:
+        if(( len(dni) > 6 ) and ( len(dni) < 9)) and dni.isnumeric():
+            # Obtener el ID de la carrera seleccionada
+            carreras = cargar_carreras()
+            carrera_id = None
+            for carrera in carreras:
+                if carrera[1] == nombre_carrera:
+                    carrera_id = carrera[0]
+                    break
+
+            cursor = conexion.cursor()
+            # Insertar un nuevo registro en la tabla Alumnos con el ID de carrera y el valor predeterminado para IDESTADOALUMNO
+
+            cursor.execute("""update alumnos set
+                               nombre = %s,
+                               apellido = %s,
+                               dni = %s,
+                               id_carrera = %s,
+                               id_estado_alumno = %s
+                               where dni = %s""", (nombre, apellido, dni, carrera_id, estado_alumno, cambiar))
+            conexion.commit()
+            cargar_datos()  # Actualizar la vista
+            # Limpiar los campos después de insertar
+            nombre_entry.delete(0, tk.END)
+            apellido_entry.delete(0, tk.END)
+            dni_entry.delete(0, tk.END)
+            carrera_combobox.set("")  # Limpiar la selección del ComboBox
+        else:
+            mostrar_alerta("DNI no valido")
+    else:
+        mostrar_alerta("Los campos son obligatorios. Debe completarlos.")
+
+    
+    estado_alumno = 1  # Valor predeterminado para IDESTADOALUMNO
+    cursor = conexion.cursor()
+    
+    conexion.commit()
+    cargar_datos()  # Actualizar la vista
+    # Limpiar los campos después de insertar
+    nombre_entry.delete(0, tk.END)
+    apellido_entry.delete(0, tk.END)
+    dni_entry.delete(0, tk.END)
+    carrera_combobox.set("")  # Limpiar la selección del ComboBox
+
+
 
 # Función para obtener las carreras desde la base de datos y cargarlas en el ComboBox
 def cargar_carreras():
@@ -58,6 +115,10 @@ def guardar_alumno():
             mostrar_alerta("Los campos son obligatorios. Debe completarlos.")
     else:
         mostrar_alerta("DNI Incorrecto")
+
+"""
+Añadir a la función de cargar_datos  el WHERE para que liste sólo los alumnos que están "REGULARES" es decir tengan id_estado_alumno = 1, para que no nos liste a los alumnos que están libres.
+"""
 # Crear ventana
 root = tk.Tk()
 root.title("Consulta de Alumnos")
