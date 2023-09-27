@@ -10,7 +10,7 @@ conexion = mysql.connector.connect(host="localhost", user="root", password="", d
 def cargar_datos():
     tree.delete(*tree.get_children())  # Borrar datos existentes en el Treeview
     cursor = conexion.cursor()
-    cursor.execute("select alumnos.nombre, alumnos.apellido, alumnos.dni, Carrera.nombre, estado_alumno.nombre from alumnos join carrera on alumnos.codcarrera = carrera.codcarrera join estado_alumno on estado_alumno.cod_estado_alumno = alumnos.cod_estado_alumno")
+    cursor.execute("select alumnos.nombre, alumnos.apellido, alumnos.dni, Carrera.nombre, estado_alumno.nombre from alumnos join carrera on alumnos.codcarrera = carrera.codcarrera join estado_alumno on estado_alumno.cod_estado_alumno = alumnos.cod_estado_alumno where alumnos.cod_estado_alumno !=2")
     for row in cursor.fetchall():
         tree.insert("", "end", values=row)
 
