@@ -57,7 +57,7 @@ def guardar_alumno():
         else:
             mostrar_alerta("Los campos son obligatorios. Debe completarlos.")
     else:
-        mostrar_alerta("DNI Incorrecto")
+        mostrar_alerta("Datos Invalidos")
 
 """
 Añadir a la función de cargar_datos  el WHERE para que liste sólo los alumnos que están "REGULARES" es decir tengan id_estado_alumno = 1, para que no nos liste a los alumnos que están libres.
