@@ -5,7 +5,7 @@ import random
 from tkinter import messagebox
 import time
 
-conexion = mysql.connector.connect(host="localhost", user="root", password="estudiantes2020", database="JUEGO", port=3305)
+conexion = mysql.connector.connect(host="localhost", user="root", password="", database="JUEGO")
 
 cursor = conexion.cursor()
 pregunta_actual = 0
@@ -303,7 +303,7 @@ respuestaErronea_dos varchar (250) not null,
 respuestaErronea_tres varchar (250) not null);
 
 CREATE TABLE Jugador (
-CREATE TABLE Jugador (
+codjugador int primary key auto_increment,
 nombre varchar (150) NOT NULL,
 apellido varchar (150) not null,
 telefono varchar (150) not null,
