@@ -51,28 +51,28 @@ def crear_ventana():
     ventana = tk.Tk()
     ventana.title("Jugadores")
     ventana.attributes('-fullscreen', True)
-    ventana.configure(bg="#630551")
+    ventana.configure(bg="lightgrey")
 
     # Crear un frame con un borde visible para el formulario de inscripción
-    formulario_frame = tk.Frame(ventana, bd=2, relief=tk.SOLID, bg="#B591B6")
+    formulario_frame = tk.Frame(ventana, bd=2, relief=tk.SOLID, bg="lightgrey")
     formulario_frame.grid(padx=10, pady=10)
 
     # Título del formulario
-    titulo_label = tk.Label(formulario_frame, text="Jugador", bg="#B591B6", font=("Arial", 22, 'bold'))
+    titulo_label = tk.Label(formulario_frame, text="Jugador", bg="lightgrey", font=("Arial", 22, 'bold'))
     titulo_label.grid(row=0, column=0, columnspan=2, pady=10)
 
     # Campos de entrada para nombre, apellido y teléfono con el mismo ancho que el ComboBox
-    nombre_label = tk.Label(formulario_frame, text="Nombre:", bg="#B591B6", font=("Arial", 17))
+    nombre_label = tk.Label(formulario_frame, text="Nombre:", bg="lightgrey", font=("Arial", 17))
     nombre_label.grid(row=1, column=0)
     nombre_entry = tk.Entry(formulario_frame)
     nombre_entry.grid(row=1, column=1, padx=5, pady=5, ipadx=5, ipady=5, sticky="ew")
 
-    apellido_label = tk.Label(formulario_frame, text="Apellido:", bg="#B591B6", font=("Arial", 17))
+    apellido_label = tk.Label(formulario_frame, text="Apellido:", bg="lightgrey", font=("Arial", 17))
     apellido_label.grid(row=2, column=0)
     apellido_entry = tk.Entry(formulario_frame)
     apellido_entry.grid(row=2, column=1, padx=5, pady=5, ipadx=5, ipady=5, sticky="ew")
 
-    telefono_label = tk.Label(formulario_frame, text="Teléfono:", bg="#B591B6", font=("Arial", 17))
+    telefono_label = tk.Label(formulario_frame, text="Teléfono:", bg="lightgrey", font=("Arial", 17))
     telefono_label.grid(row=3, column=0)
     telefono_entry = tk.Entry(formulario_frame)
     telefono_entry.grid(row=3, column=1, padx=5, pady=5, ipadx=5, ipady=5, sticky="ew")
@@ -83,7 +83,7 @@ def crear_ventana():
     jugar_button = tk.Button(formulario_frame, text="SALIR", bg="#9E5B00", font=("Arial", 10, 'bold'), command=lambda:salir_pantalla_princial(ventana))
     jugar_button.grid(row=7, columnspan=3, pady=5, sticky="ew")
 
-    titulo2_label = tk.Label(ventana, text="Tabla de Jugadores", font=("Arial", 35, 'bold'), bg="#630551", fg="white")
+    titulo2_label = tk.Label(ventana, text="Tabla de Jugadores", font=("Arial", 35, 'bold'), bg="lightgrey")
     titulo2_label.grid(row=4, column=0, columnspan=5, padx=250, pady=15)
 
     # Crear Treeview para mostrar la información
@@ -147,12 +147,12 @@ def abrir_juego():
 
     root.title("Juego de Preguntas y Respuestas")
     root.attributes("-fullscreen", True)
-    root.configure(bg="#630551")
+    root.configure(bg="lightgrey")
 
-    label_pregunta = tk.Label(root, text="", font=("Helvetica", 20, 'bold'), bg="#630551", fg="white")
+    label_pregunta = tk.Label(root, text="", font=("Helvetica", 20, 'bold'), bg="lightgrey")
     label_pregunta.pack(pady=90)
 
-    frame_respuestas = tk.Frame(root, bg="#630551")
+    frame_respuestas = tk.Frame(root, bg="lightgrey")
     frame_respuestas.pack()
     botones_respuesta = []
 
@@ -162,7 +162,7 @@ def abrir_juego():
     preguntas_respuestas = obtener_preguntas()
             
     for i in range(4):
-        frame_grupo = tk.Frame(frame_respuestas, bg="#630551")
+        frame_grupo = tk.Frame(frame_respuestas)
         frame_grupo.pack(pady=30)
         boton = tk.Button(frame_grupo, text="", font=("Helvetica", 17), command=lambda i=i: verificar_respuesta(botones_respuesta[i]['text'] , root))
         boton.pack(pady=10)
